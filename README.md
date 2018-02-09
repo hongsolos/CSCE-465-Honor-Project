@@ -1,12 +1,12 @@
 # CSCE 465 Honor Project
 
-CSCE 470 Team project - A crawler program to retrieve essential information from Steam.com
+This project explores new ways to exploit vulnerabilities of bot detection programs in gaming industry, and how to defend against it.
 
 ## Authors
 
 * **Amy Li** - *Contributor* - 
 * **Scott Petterson** - *Contributor* - 
-* **Han Hong** - *Contributor* - [hongsolos](https://github.com/hongsolos)
+* **Han Hong** - *Contributor* - [Hong's Github](https://github.com/hongsolos)
 
 
 ## Background
@@ -23,7 +23,7 @@ CSCE 470 Team project - A crawler program to retrieve essential information from
 
 ## Timeline
 
-02/05/2018 - Project Initiated
+02/08/2018 - Project Initiated
 
 ## Built With
 
