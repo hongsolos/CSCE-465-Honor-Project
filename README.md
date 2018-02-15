@@ -24,6 +24,7 @@ This project explores new ways to exploit vulnerabilities of bot detection progr
 ## Timeline
 
 02/08/2018 - Project Initiated
+02/15/2018 - Initial Planning
 
 ## Built With
 
