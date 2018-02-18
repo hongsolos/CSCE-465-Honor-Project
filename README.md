@@ -4,8 +4,8 @@ This project explores new ways to exploit vulnerabilities of bot detection progr
 
 ## Authors
 
-* **Amy Li** - *Contributor* - 
-* **Scott Petterson** - *Contributor* - 
+* **Amy Li** - *Contributor* - [Amy's Github](https://github.com/amyjiayao)
+* **Scott Petterson** - *Contributor* - [Scott's Github](https://github.com/M-Scott-Peterson)
 * **Han Hong** - *Contributor* - [Hong's Github](https://github.com/hongsolos)
 
 
@@ -23,14 +23,14 @@ This project explores new ways to exploit vulnerabilities of bot detection progr
 
 ## Timeline
 
-02/08/2018 - Project Initiated
-02/15/2018 - Initial Planning
+* 02/08/2018 - Project Initiated
+* 02/15/2018 - Initial Planning
+* 02/18/2018 - Project Proposal Submission
 
 ## Built With
 
 
 ## Acknowledgments
-
 
 
 
