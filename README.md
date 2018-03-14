@@ -26,6 +26,7 @@ This project explores new ways to exploit vulnerabilities of bot detection progr
 * 02/08/2018 - Project Initiated
 * 02/15/2018 - Initial Planning
 * 02/18/2018 - Project Proposal Submission
+* 03/12/2018 - Aimbot Testing
 
 ## Built With
 
