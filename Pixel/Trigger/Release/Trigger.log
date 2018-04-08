@@ -1,0 +1,9 @@
+﻿  stdafx.cpp
+  main.cpp
+main.cpp(101): warning C4101: 'hdcScreen': unreferenced local variable
+  Generating code
+c:\users\han\source\repos\trigger\trigger\main.cpp(147): warning C4715: 'Trigger': not all control paths return a value
+  All 49 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Trigger.vcxproj -> C:\Users\Han\source\repos\Trigger\Release\Trigger.exe
+  Trigger.vcxproj -> C:\Users\Han\source\repos\Trigger\Release\Trigger.pdb (Full PDB)
