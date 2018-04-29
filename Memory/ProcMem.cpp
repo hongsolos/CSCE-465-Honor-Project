@@ -74,7 +74,7 @@ void ProcMem::Inject(DWORD dwAddress, char *Inj_Bts, char *Def_Bts, BOOL Type){
 	__int32 i_ISize = GetLength(Inj_Bts);
 	__int32 i_DSize = GetLength(Def_Bts); 
 
-	if(!bIOn)
+	if(!TRIGGER)
 	{		
 		//NOP All Bytes In The Array Past The 5th Byte	
 		if(i_DSize >= 5)
@@ -82,27 +82,27 @@ void ProcMem::Inject(DWORD dwAddress, char *Inj_Bts, char *Def_Bts, BOOL Type){
 				Write<BYTE>(dwAddress + i, 0x90);	
 		else {cout << "\nINJECTION: Default Bytes Must Be More Than 5\n"; return;}
 
-		//Create Codecave
+		//Create Address
 		dwCaveAddress = (DWORD)VirtualAllocEx(hProcess, NULL,  i_ISize + 5, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 
-		//Calculate Jmp/Return Distances In Bytes To Write
+		//Calculate JMP/Return Distances In Bytes To Write
 		DWORD dwRetJmp = (dwAddress + i_DSize) - dwCaveAddress - 5; //(NextInstruction - CaveAddress - 5) - is correct equation.
-		DWORD dwBaseJmp = dwCaveAddress - dwAddress - 5; //Base Jmp
+		DWORD dwBaseJmp = dwCaveAddress - dwAddress - 5; //Base JMP
 
-		//Loop Through Each Address Writing Inj_Bts Inside The Codecave
+		//Loop Through Each Address Writing Inj_Bts Inside The ADDRESS
 		for (__int32 i = 0; i <= i_ISize; i++)			
 			Write<BYTE>(dwCaveAddress+i, Inj_Bts[i]);
 		
-		//Write The Return Distance In Bytes (E9 = Jmp | E8 = Call) To The Original Address
+		//Write The Return Distance In Bytes (E9 = JMP | E8 = Call) To The Original Address
 		Write<BYTE>(dwCaveAddress + i_ISize, Type ? 0xE9 : 0xE8);
 		Write<DWORD>(dwCaveAddress + i_ISize + 1, dwRetJmp);
 		
-		//Write The Jump From The Original Address To The Codecave
+		//Write The Jump From The Original Address To The ADDRESS
 		Write<BYTE>(dwAddress, Type ? 0xE9 : 0xE8);
 		Write<DWORD>(dwAddress + 1, dwBaseJmp);
 	}	
 
-	if(bIOn)
+	if(TRIGGER)
 	{			
 		//Restore Original Bytes
 		for(__int32 i = 0; i < i_DSize; i++)					
@@ -111,7 +111,7 @@ void ProcMem::Inject(DWORD dwAddress, char *Inj_Bts, char *Def_Bts, BOOL Type){
 		//Clean Up! (DeAllocate CodeCave)
 		VirtualFreeEx(hProcess, (LPVOID)dwCaveAddress, i_ISize + 5, MEM_DECOMMIT);
 	}
-    bIOn = !bIOn; 
+    TRIGGER = !TRIGGER; 
 } 
 
 DWORD ProcMem::AOB_Scan(DWORD dwAddress, DWORD dwEnd, char *Bytes){
