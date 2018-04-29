@@ -1,0 +1,5 @@
+﻿  main.cpp
+c:\users\han\source\repos\trigger\trigger\main.cpp(99): warning C4101: 'hdcScreen': unreferenced local variable
+c:\users\han\source\repos\trigger\trigger\main.cpp(146): warning C4715: 'Trigger': not all control paths return a value
+  Trigger.vcxproj -> C:\Users\Han\source\repos\Trigger\Debug\Trigger.exe
+  Trigger.vcxproj -> C:\Users\Han\source\repos\Trigger\Debug\Trigger.pdb (Partial PDB)
