@@ -14,7 +14,7 @@ using namespace std;
 
 MouseCord currentMouse(0, 0);
 
-
+//SETUP BITMAP TO STORE SCREEN INFORMATIONS
 void SetupBitmapInfo(BITMAPINFO &bmi, int w, int h, int bitperpixels) {
 	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 	bmi.bmiHeader.biWidth = w;
@@ -25,6 +25,7 @@ void SetupBitmapInfo(BITMAPINFO &bmi, int w, int h, int bitperpixels) {
 	bmi.bmiHeader.biSizeImage = 0;
 }
 
+//CAPTURE THE CURRENT STATE OF THE SCREEN
 bool ScreenShot(string current, BITMAP &bm, HBITMAP &hbmap, BITMAPINFO &bmi, HDC &hdcShot, HBITMAP &hbitmapOld, HWND &window) {
 	RECT rc;
 	GetWindowRect(window, &rc);
@@ -47,6 +48,7 @@ bool ScreenShot(string current, BITMAP &bm, HBITMAP &hbmap, BITMAPINFO &bmi, HDC
 	return true;
 }
 
+//COMPARITOR FOR PIXEL
 bool CompareColor(RGBQUAD* ppixels, int h, int w, int x, int y) {
 	int p = (h - y - 1)*w + x;
 
@@ -66,25 +68,30 @@ bool CompareColor(RGBQUAD* ppixels, int h, int w, int x, int y) {
 	return false;
 }
 
+//AUTO TRIGGER
 int Shoot(int x, int y) {
 	mouse_event(MOUSEEVENTF_LEFTDOWN, x, y, 0, 0);
 	mouse_event(MOUSEEVENTF_LEFTUP, x, y, 0, 0);
 	return 0;
 }
 
+
+//SCANNING FUNCTION
 void ScanBMP(ScreenCapture *scan) {
+	//SCANNING IN Y DIRECTION
 	for (int y = (scan->screenWindows.bottom - scan->screenWindows.top) / 4;
 		y < ((scan->screenWindows.bottom - scan->screenWindows.top) - (scan->screenWindows.bottom - scan->screenWindows.top)/3.5);
 			y++)
 	{
+		//SCANNING IN X DIRECTION
 		for (int x = (scan->screenWindows.right - scan->screenWindows.left) / 4;
 			x < ((scan->screenWindows.bottom - scan->screenWindows.top) - (scan->screenWindows.bottom - scan->screenWindows.top) / 3.5);
 			x++)
 		{
 			SetCursorPos(x + scan->screenWindows.left, (y + 4) + scan->screenWindows.top);
 			
+			//PIXEL COMPARISION THRESHOLD -- OPTIMIZED
 			if (CompareColor(scan->pixels, scan->screen.bmHeight, scan->screen.bmWidth, x, y)) {
-
 				int z = x;
 				while (z < (int)((scan->screenWindows.right - scan->screenWindows.left) - (scan->screenWindows.right - scan->screenWindows.left) / 4)) {
 					if (!CompareColor(scan->pixels, scan->screen.bmHeight, scan->screen.bmWidth, z, y))
@@ -92,10 +99,13 @@ void ScanBMP(ScreenCapture *scan) {
 					z++;
 				}
 
+				//MOVE MOUSE TO COORDINATE AND PREPARE TO FIRE (OR NOT, DEPEND)
 				//SetCursorPos((z - (z - x) / 2) + scan->screenWindows.left, (y + 4) + scan->screenWindows.top);
 				POINT currentPos;
 				GetCursorPos(&currentPos);
 
+
+				//A BIT OF DETOUR
 				if (currentPos.x < currentMouse.X + 4 && currentPos.x > currentMouse.X - 4
 					&& currentPos.y < currentMouse.Y + 4
 					&& currentPos.y > currentMouse.Y - 4) 
@@ -111,6 +121,8 @@ void ScanBMP(ScreenCapture *scan) {
 	}
 }
 
+
+//THIS IS THE MAIN FUNCTION FOR AIMBOT. IT TRIGGERS WHEN CONDITION IS MET (OR PIXEL IN THIS CASE)
 bool Trigger(HWND window, string current) {
 	RECT scrWindow;
 	GetWindowRect(window, &scrWindow);
@@ -125,6 +137,7 @@ bool Trigger(HWND window, string current) {
 
 	int interval;
 
+	//CONTINOUS SCREEN CAPTURE
 	while (true) {
 		if (!GetAsyncKeyState('X')) {
 			interval = clock();
@@ -132,6 +145,8 @@ bool Trigger(HWND window, string current) {
 				break;
 			}
 
+
+			//STORE INFO IN BITMAP FOR COMPARISON
 			HBITMAP hbmapNew = CreateCompatibleBitmap(hdcShot, scrWindow.right - scrWindow.left, scrWindow.bottom - scrWindow.top);
 			HDC hdcShotNew = CreateCompatibleDC(hdcShot);
 			HBITMAP OldBmp = (HBITMAP)SelectObject(hdcShotNew, hbmapNew);
@@ -154,6 +169,7 @@ bool Trigger(HWND window, string current) {
 			ScreenCapture scan(bm, scrWindow, ppixels);
 			ScanBMP(&scan);
 
+			//MEMORY LEAK PREVENTION
 			if (ppixels)
 				free(ppixels);
 			SelectObject(hdcShotNew, hbmapOld);
@@ -170,9 +186,11 @@ bool Trigger(HWND window, string current) {
 
 int main()
 {
+	//WINDOW'S NAME. TESTING ON PAINT
 	string GameWindow = "test.jpg - Paint";
 	HWND curWindow = FindWindow(0, GameWindow.c_str());
     
+	//ERROR NO WINDOWS FOUND
 	while (!curWindow) {
 		system("CLS");
 		curWindow = FindWindow(0, GameWindow.c_str());
@@ -180,14 +198,15 @@ int main()
 		Sleep(500);
 	}
 	
-	//Get current mouse position
+	//GET CURRENT MOUSE POSITION
 	POINT currentPos;
 	GetCursorPos(&currentPos);
 
-	//Pass values into MouseCord object
+	//STORE THE MOUSE POSITIONS
 	currentMouse.X = currentPos.x;
 	currentMouse.Y = currentPos.y;
 
+	//AIMBOT
 	Trigger(curWindow, GameWindow);
 
 
