@@ -10,16 +10,18 @@ This project explores new ways to exploit vulnerabilities of bot detection progr
 
 
 ## Background
-
+This project is drafted for CSCE 465 Honor Project - Cyber Security
 
 ### Installation Instructions
-
+Run with visual studio
 
 ### Issues Notes - Testing Notes
-
+You will be detected
 
 ### Future Improvement
+None - In fact, distribution of this code is discouraged
 
+THIS PROJECT IS CLOSED
 
 ## Timeline
 
@@ -29,9 +31,10 @@ This project explores new ways to exploit vulnerabilities of bot detection progr
 * 03/12/2018 - Aimbot Testing
 
 ## Built With
-
+Visual Studio C++
 
 ## Acknowledgments
-
+Amy Li
+Youtube
 
 
