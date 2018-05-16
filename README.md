@@ -29,6 +29,7 @@ THIS PROJECT IS CLOSED
 * 02/15/2018 - Initial Planning
 * 02/18/2018 - Project Proposal Submission
 * 03/12/2018 - Aimbot Testing
+* 05/16/2018 - Done
 
 ## Built With
 Visual Studio C++
